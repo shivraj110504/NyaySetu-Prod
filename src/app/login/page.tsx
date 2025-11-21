@@ -64,8 +64,8 @@ function LoginForm() {
 
         if (session) {
           console.log("Session verified, redirecting...");
-          router.refresh(); // Refresh to update middleware/server state
-          router.push("/dashboard");
+          // Use window.location.href to force a full page reload and ensure all cookies/state are fresh
+          window.location.href = "/dashboard";
         } else {
           throw new Error("Session creation failed. Please try again.");
         }
