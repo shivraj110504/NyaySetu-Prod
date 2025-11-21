@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import { authClient } from "@/lib/auth-client";
+import { apiPost } from "@/lib/api";
 
 // Separate component that uses useSearchParams
 function LoginForm() {
@@ -41,37 +42,47 @@ function LoginForm() {
   // ============================================
   // LOGIN FORM SUBMISSION
   // ============================================
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-    setLoading(true);
 
-    try {
-      // Call Better Auth sign in
-      const { data, error: signInError } = await authClient.signIn.email({
-        email: formData.email,
-        password: formData.password,
-      });
 
-      if (signInError) {
-        // Check specific error cases
-        if (signInError.status === 403) {
-          setError("Please verify your email before logging in.");
-          return;
-        }
-        throw new Error(signInError.message || "Login failed");
-      }
+interface LoginBody {
+  email: string;
+  password: string;
+}
 
-      // Success! Redirect to dashboard
-      router.push("/dashboard");
-      
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Invalid email or password");
-    } finally {
-      setLoading(false);
+interface LoginResponse {
+  message: string;
+  user?: { id: string; email: string; firstName?: string; lastName?: string };
+  token?: string; // optional JWT if returned
+}
+
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setError("");
+  setSuccess("");
+  setLoading(true);
+
+  try {
+    const data = await apiPost<LoginResponse, LoginBody>("auth/login", {
+      email: formData.email,
+      password: formData.password,
+    });
+
+    // If using JWT cookies, the server can set it automatically
+    // Otherwise, store token in localStorage
+    if (data.token) {
+      localStorage.setItem("token", data.token);
     }
-  };
+
+    setSuccess("Login successful! Redirecting...");
+    router.push("/dashboard"); // redirect to dashboard
+
+  } catch (err) {
+    setError(err instanceof Error ? err.message : "Invalid email or password");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="flex items-center justify-center p-8 bg-black min-h-screen">
