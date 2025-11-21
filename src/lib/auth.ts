@@ -1,6 +1,7 @@
 // lib/auth.ts
 import { betterAuth } from "better-auth";
 import { emailOTP } from "better-auth/plugins";
+import { nextCookies } from "better-auth/next-js";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { MongoClient } from "mongodb";
 import { Resend } from "resend";
@@ -26,7 +27,6 @@ export const auth = betterAuth({
 
   secret: process.env.BETTER_AUTH_SECRET,
 
-  // Trusted origins for CORS
   trustedOrigins: [
     "http://localhost:3000",
     "http://localhost:3001",
@@ -34,20 +34,6 @@ export const auth = betterAuth({
     process.env.BETTER_AUTH_URL || "",
     process.env.NEXT_PUBLIC_APP_URL || "",
   ].filter(Boolean),
-
-  // Session configuration
-  session: {
-    cookieCache: {
-      enabled: true,
-      maxAge: 60 * 5, // 5 minutes
-    },
-  },
-
-  // Cookie configuration for production
-  advanced: {
-    cookiePrefix: "better-auth",
-    useSecureCookies: process.env.NODE_ENV === "production",
-  },
 
   emailAndPassword: {
     enabled: true,
@@ -72,6 +58,9 @@ export const auth = betterAuth({
   },
 
   plugins: [
+    // IMPORTANT: nextCookies() plugin is required for proper cookie handling in Next.js
+    nextCookies(),
+    
     emailOTP({
       otpLength: 6,
       expiresIn: 300,

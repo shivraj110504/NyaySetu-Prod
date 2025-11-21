@@ -3,6 +3,7 @@
 
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { getSessionCookie } from "better-auth/cookies";
 
 // Routes that require authentication
 const protectedRoutes = ["/dashboard"];
@@ -22,22 +23,22 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Get all cookies and check for session
-  // Better Auth can use different cookie names depending on configuration
-  const cookies = request.cookies;
-  
-  // Check for various possible session cookie names
-  const sessionToken = 
-    cookies.get("better-auth.session_token")?.value ||
-    cookies.get("better-auth.session")?.value ||
-    cookies.get("__session")?.value ||
-    cookies.get("session")?.value;
+  // Use Better Auth's getSessionCookie helper
+  // This checks for the "better-auth.session_token" cookie
+  const sessionCookie = getSessionCookie(request, {
+    cookieName: "session_token",
+    cookiePrefix: "better-auth",
+  });
 
-  const isAuthenticated = !!sessionToken;
+  // Fallback: also check manually in case getSessionCookie has issues
+  const manualCookie = request.cookies.get("better-auth.session_token")?.value;
+  
+  const isAuthenticated = !!(sessionCookie || manualCookie);
 
   // Debug logging (check Vercel logs)
   console.log(`[Middleware] Path: ${pathname}`);
-  console.log(`[Middleware] Cookies:`, cookies.getAll().map(c => c.name));
+  console.log(`[Middleware] Session Cookie (helper): ${!!sessionCookie}`);
+  console.log(`[Middleware] Session Cookie (manual): ${!!manualCookie}`);
   console.log(`[Middleware] Is Authenticated: ${isAuthenticated}`);
 
   // Protected routes - require authentication

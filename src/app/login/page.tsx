@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useEffect, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -10,7 +10,6 @@ import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import { authClient } from "@/lib/auth-client";
 
 function LoginForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   const [formData, setFormData] = useState({
@@ -38,30 +37,41 @@ function LoginForm() {
     setLoading(true);
 
     try {
+      console.log("Attempting login...");
+
       const { data, error: signInError } = await authClient.signIn.email({
         email: formData.email,
         password: formData.password,
       });
 
+      console.log("Login response:", { data, error: signInError });
+
       if (signInError) {
         if (signInError.status === 403) {
           setError("Please verify your email before logging in.");
+          setLoading(false);
           return;
         }
         throw new Error(signInError.message || "Login failed");
       }
 
-      if (data) {
-        setSuccess("Login successful! Redirecting...");
-        
-        // Use window.location for hard redirect to ensure cookies are set
-        window.location.href = "/dashboard";
+      if (data && data.user) {
+        setSuccess("Login successful! Redirecting to dashboard...");
+        console.log("Login successful, user:", data.user.email);
+
+        // Wait for cookie to be properly set by nextCookies plugin
+        // Then do a full page navigation
+        setTimeout(() => {
+          console.log("Redirecting now...");
+          window.location.href = "/dashboard";
+        }, 1000);
+      } else {
+        throw new Error("Login failed - no user data returned");
       }
 
     } catch (err) {
       console.error("Login error:", err);
       setError(err instanceof Error ? err.message : "Invalid email or password");
-    } finally {
       setLoading(false);
     }
   };
@@ -96,6 +106,7 @@ function LoginForm() {
               value={formData.email}
               onChange={handleChange}
               required
+              disabled={loading}
               className="text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
               style={{ backgroundColor: "#171717", borderColor: "#3A3A3A" }}
             />
@@ -110,6 +121,7 @@ function LoginForm() {
               value={formData.password}
               onChange={handleChange}
               required
+              disabled={loading}
               className="text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
               style={{ backgroundColor: "#171717", borderColor: "#3A3A3A" }}
             />
