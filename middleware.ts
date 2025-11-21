@@ -7,22 +7,40 @@ import type { NextRequest } from "next/server";
 // Routes that require authentication
 const protectedRoutes = ["/dashboard"];
 
-// Routes that should redirect to dashboard if already logged in
+// Routes for authentication (login/signup)
 const authRoutes = ["/login", "/signup"];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  
-  // Get the session token from cookies
-  // Better Auth uses "better-auth.session_token" by default
-  const sessionToken = request.cookies.get("better-auth.session_token")?.value;
-  
-  const isAuthenticated = !!sessionToken;
-  
-  // Log for debugging (remove in production)
-  console.log(`[Middleware] Path: ${pathname}, Has Session: ${isAuthenticated}`);
 
-  // Check if trying to access protected route without auth
+  // Skip middleware for API routes and static files
+  if (
+    pathname.startsWith("/api") ||
+    pathname.startsWith("/_next") ||
+    pathname.includes(".")
+  ) {
+    return NextResponse.next();
+  }
+
+  // Get all cookies and check for session
+  // Better Auth can use different cookie names depending on configuration
+  const cookies = request.cookies;
+  
+  // Check for various possible session cookie names
+  const sessionToken = 
+    cookies.get("better-auth.session_token")?.value ||
+    cookies.get("better-auth.session")?.value ||
+    cookies.get("__session")?.value ||
+    cookies.get("session")?.value;
+
+  const isAuthenticated = !!sessionToken;
+
+  // Debug logging (check Vercel logs)
+  console.log(`[Middleware] Path: ${pathname}`);
+  console.log(`[Middleware] Cookies:`, cookies.getAll().map(c => c.name));
+  console.log(`[Middleware] Is Authenticated: ${isAuthenticated}`);
+
+  // Protected routes - require authentication
   if (protectedRoutes.some(route => pathname.startsWith(route))) {
     if (!isAuthenticated) {
       console.log("[Middleware] No session, redirecting to /login");
@@ -31,21 +49,18 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // Optional: Redirect logged-in users away from auth pages
-  // Uncomment if you want this behavior
-  // if (authRoutes.includes(pathname) && isAuthenticated) {
-  //   console.log("[Middleware] Already logged in, redirecting to /dashboard");
-  //   const dashboardUrl = new URL("/dashboard", request.url);
-  //   return NextResponse.redirect(dashboardUrl);
-  // }
+  // Auth routes - redirect to dashboard if already logged in
+  if (authRoutes.includes(pathname) && isAuthenticated) {
+    console.log("[Middleware] Already logged in, redirecting to /dashboard");
+    const dashboardUrl = new URL("/dashboard", request.url);
+    return NextResponse.redirect(dashboardUrl);
+  }
 
   return NextResponse.next();
 }
 
-// Configure which routes the middleware runs on
 export const config = {
   matcher: [
-    // Match all routes except static files and api
     "/((?!api|_next/static|_next/image|favicon.ico|.*\\.).*)",
   ],
 };

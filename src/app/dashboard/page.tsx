@@ -2,50 +2,73 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
 export default function DashboardPage() {
-  const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get current session
-    const getSession = async () => {
+    let mounted = true;
+
+    const checkSession = async () => {
       try {
-        const { data: session } = await authClient.getSession();
+        console.log("Dashboard: Checking session...");
+
+        const { data: session, error } = await authClient.getSession();
+
+        console.log("Dashboard: Session result:", { session, error });
+
+        if (!mounted) return;
+
+        if (error) {
+          console.error("Dashboard: Session error:", error);
+          window.location.replace("/login");
+          return;
+        }
 
         if (session?.user) {
+          console.log("Dashboard: User found:", session.user.email);
           setUser(session.user);
+          setLoading(false);
         } else {
-          // No session, redirect to login
-          window.location.href = "/login";
+          console.log("Dashboard: No user in session, redirecting...");
+          window.location.replace("/login");
         }
-      } catch (error) {
-        console.error("Session error:", error);
-        window.location.href = "/login";
-      } finally {
-        setLoading(false);
+      } catch (err) {
+        console.error("Dashboard: Failed to get session:", err);
+        if (mounted) {
+          window.location.replace("/login");
+        }
       }
     };
 
-    getSession();
+    // Small delay to ensure cookies are available after redirect
+    const timer = setTimeout(() => {
+      checkSession();
+    }, 200);
+
+    return () => {
+      mounted = false;
+      clearTimeout(timer);
+    };
   }, []);
 
   const handleLogout = async () => {
     try {
+      console.log("Logging out...");
       await authClient.signOut();
-      window.location.href = "/login";
-    } catch (error) {
-      console.error("Logout error:", error);
+      window.location.replace("/login");
+    } catch (err) {
+      console.error("Logout error:", err);
+      window.location.replace("/login");
     }
   };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-black">
-        <div className="text-white text-xl">Loading...</div>
+        <div className="text-white text-xl">Loading dashboard...</div>
       </div>
     );
   }
