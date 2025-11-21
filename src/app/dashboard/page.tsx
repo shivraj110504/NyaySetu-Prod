@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -210,7 +212,7 @@ export default function DashboardPage() {
               <div className="p-6">
                 <h3 className="text-2xl font-bold text-white text-center mb-6">more features coming soon</h3>
                 <p className="text-gray-400 text-center py-8">
-                  No recent activity yet. 
+                  No recent activity yet.
                 </p>
               </div>
             </NeonGradientCard>

@@ -24,10 +24,10 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export const auth = betterAuth({
   // Database adapter for MongoDB
   database: mongodbAdapter(db),
-  
+
   // Base URL of your app
-  baseURL: process.env.BETTER_AUTH_URL,
-  
+  baseURL: process.env.BETTER_AUTH_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"),
+
   // Email and password authentication settings
   emailAndPassword: {
     enabled: true,
@@ -58,7 +58,7 @@ export const auth = betterAuth({
       otpLength: 6,                    // 6-digit OTP
       expiresIn: 300,                  // OTP expires in 5 minutes (300 seconds)
       sendVerificationOnSignUp: true,  // Auto-send OTP on signup
-      
+
       // Function to send OTP via email
       async sendVerificationOTP({ email, otp, type }) {
         let subject = "";
@@ -81,10 +81,10 @@ export const auth = betterAuth({
         // 1. Send to your own verified email, OR
         // 2. Use "onboarding@resend.dev" as the from address
         // 3. Add and verify your own domain for production
-        
+
         console.log(`📧 Attempting to send OTP to: ${email}`);
         console.log(`📧 OTP Code: ${otp}`); // Remove this in production!
-        
+
         try {
           const emailResponse = await resend.emails.send({
             // from: "Nyaysetu AI <onboarding@resend.dev>", // This is Resend's test sender

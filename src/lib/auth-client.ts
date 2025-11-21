@@ -1,14 +1,12 @@
 // lib/auth-client.ts
-// Create this file at: lib/auth-client.ts
-
 import { createAuthClient } from "better-auth/react";
 import { emailOTPClient } from "better-auth/client/plugins";
 
 // Create the auth client with email OTP plugin
 export const authClient = createAuthClient({
-  // Base URL of your server (optional if same domain)
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
-  
+  // Remove baseURL or leave undefined for same-domain relative calls
+  // baseURL: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+
   // Add email OTP client plugin
   plugins: [
     emailOTPClient(),
