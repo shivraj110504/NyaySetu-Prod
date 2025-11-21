@@ -46,7 +46,7 @@ const SignupPage = () => {
     }
 
     setLoading(true);
-    
+
     try {
       // Call Better Auth signup with custom fields
       const { data, error: signUpError } = await authClient.signUp.email({
@@ -65,11 +65,11 @@ const SignupPage = () => {
       }
 
       console.log("Signup successful, moving to OTP verification");
-      
+
       // Move to OTP verification step
       // OTP is automatically sent because sendVerificationOnSignUp: true
       setStep("verify");
-      
+
     } catch (err) {
       console.error("Signup error:", err);
       setError(err instanceof Error ? err.message : "Something went wrong");
@@ -97,10 +97,10 @@ const SignupPage = () => {
       }
 
       console.log("Email verified successfully");
-      
+
       // Redirect to login page using window.location for hard redirect
       window.location.href = "/login?verified=true";
-      
+
     } catch (err) {
       console.error("OTP verification error:", err);
       setError(err instanceof Error ? err.message : "Invalid OTP");
@@ -115,19 +115,19 @@ const SignupPage = () => {
   const handleResendOTP = async () => {
     setError("");
     setLoading(true);
-    
+
     try {
       const { error: resendError } = await authClient.emailOtp.sendVerificationOtp({
         email: formData.email,
         type: "email-verification",
       });
-      
+
       if (resendError) {
         throw new Error(resendError.message);
       }
-      
+
       alert("New OTP sent to your email!");
-      
+
     } catch (err) {
       console.error("Resend OTP error:", err);
       setError(err instanceof Error ? err.message : "Failed to resend OTP");

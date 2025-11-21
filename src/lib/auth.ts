@@ -21,13 +21,13 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // ============================================
 export const auth = betterAuth({
   database: mongodbAdapter(db),
-  
+
   // Base URL - must match your deployment
   baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
-  
+
   // Secret for signing tokens
   secret: process.env.BETTER_AUTH_SECRET,
-  
+
   // Trusted origins for CORS
   trustedOrigins: [
     "http://localhost:3000",

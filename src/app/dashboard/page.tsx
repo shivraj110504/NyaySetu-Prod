@@ -15,7 +15,7 @@ export default function DashboardPage() {
     const getSession = async () => {
       try {
         const { data: session } = await authClient.getSession();
-        
+
         if (session?.user) {
           setUser(session.user);
         } else {
@@ -70,7 +70,7 @@ export default function DashboardPage() {
             <h2 className="text-lg font-semibold text-cyan-500 mb-4">
               User Information
             </h2>
-            
+
             <div className="space-y-3">
               <div className="flex">
                 <span className="text-gray-400 w-24">Name:</span>

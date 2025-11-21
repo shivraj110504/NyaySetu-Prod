@@ -7,7 +7,7 @@ export const authClient = createAuthClient({
   // Use environment variable or fallback
   // On client-side, NEXT_PUBLIC_ vars are available
   baseURL: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-  
+
   // Add email OTP client plugin
   plugins: [
     emailOTPClient(),

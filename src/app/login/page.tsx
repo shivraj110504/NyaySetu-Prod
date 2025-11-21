@@ -53,7 +53,7 @@ function LoginForm() {
 
       if (data) {
         setSuccess("Login successful! Redirecting...");
-        
+
         // Use window.location for hard redirect to ensure cookies are set
         window.location.href = "/dashboard";
       }
