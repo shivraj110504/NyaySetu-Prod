@@ -10,6 +10,7 @@ import { SparklesPreview } from "@/components/sparclesUi";
 import { MacbookScroll } from "@/components/ui/macbook-scroll";
 import { MagicCard } from "@/components/ui/magic-card";
 import { ShinyButton } from "@/components/ui/shiny-button";
+import FooterComponent from "@/components/footer/FooterComponent";
 
 // Auth
 import { authClient } from "@/lib/auth-client";
@@ -59,22 +60,22 @@ export default function DashboardPage() {
       <LoggedNav />
       <SparklesPreview />
 
-      <div className="min-h-screen bg-white dark:bg-black pt-24 px-4 pb-12">
+      <div className="min-h-screen bg-background pt-24 px-4 pb-12 transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           {/* Welcome Section */}
           <div className="mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
               Welcome back, {user.name || "User"}!
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 text-lg">
+            <p className="text-muted-foreground text-lg">
               Access your legal AI tools and manage your account
             </p>
           </div>
 
           {/* Section Title */}
           <div className="text-center max-w-2xl mx-auto mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Your AI Legal Tools</h2>
-            <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm md:text-base">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Your AI Legal Tools</h2>
+            <p className="mt-2 text-muted-foreground text-sm md:text-base">
               Choose from our powerful AI features to get started
             </p>
           </div>
@@ -83,76 +84,76 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1400px] mx-auto">
 
             {/* Chatbot */}
-            <MagicCard className="w-full h-auto hover:scale-105 transition-transform">
-              <div className="p-6 text-gray-900 dark:text-white flex flex-col h-full">
+            <MagicCard className="w-full h-auto hover:scale-105 transition-transform rounded-lg">
+              <div className="p-6 text-foreground flex flex-col h-full">
                 <div className="mb-4">
-                  <svg width="38" height="38" fill="none" className="stroke-gray-900 dark:stroke-white" strokeWidth="1.7">
+                  <svg width="38" height="38" fill="none" className="stroke-foreground" strokeWidth="1.7">
                     <path d="M12 22c4.97 0 9-3.58 9-8s-4.03-8-9-8-9 3.58-9 8c0 2.64 1.32 5 3.43 6.57L5 22l4.21-1.31C10.1 21.56 11.03 22 12 22z" />
                   </svg>
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Chatbot</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300 flex-grow">
+                <p className="text-sm text-muted-foreground flex-grow">
                   Get instant legal guidance for IPC sections.
                 </p>
-                <ShinyButton className="mt-4 bg-black dark:bg-black text-white">
+                <ShinyButton className="mt-4 bg-primary text-primary-foreground">
                   Launch Chatbot
                 </ShinyButton>
               </div>
             </MagicCard>
 
             {/* IPC Prediction */}
-            <MagicCard className="w-full h-auto hover:scale-105 transition-transform">
-              <div className="p-6 text-gray-900 dark:text-white flex flex-col h-full">
+            <MagicCard className="w-full h-auto hover:scale-105 transition-transform rounded-lg">
+              <div className="p-6 text-foreground flex flex-col h-full">
                 <div className="mb-4">
-                  <svg width="38" height="38" fill="none" className="stroke-gray-900 dark:stroke-white" strokeWidth="1.7">
+                  <svg width="38" height="38" fill="none" className="stroke-foreground" strokeWidth="1.7">
                     <circle cx="12" cy="12" r="9"></circle>
                     <path d="M12 7v5l3 3"></path>
                   </svg>
                 </div>
                 <h3 className="text-xl font-semibold mb-2">IPC Section Prediction</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300 flex-grow">
+                <p className="text-sm text-muted-foreground flex-grow">
                   Predict relevant IPC sections from incident details.
                 </p>
-                <ShinyButton className="mt-4 bg-black dark:bg-black text-white">
+                <ShinyButton className="mt-4 bg-primary text-primary-foreground">
                   Start Prediction
                 </ShinyButton>
               </div>
             </MagicCard>
 
             {/* Draft Generator */}
-            <MagicCard className="w-full h-auto hover:scale-105 transition-transform">
-              <div className="p-6 text-gray-900 dark:text-white flex flex-col h-full">
+            <MagicCard className="w-full h-auto hover:scale-105 transition-transform rounded-lg">
+              <div className="p-6 text-foreground flex flex-col h-full">
                 <div className="mb-4">
-                  <svg width="38" height="38" fill="none" className="stroke-gray-900 dark:stroke-white" strokeWidth="1.7">
+                  <svg width="38" height="38" fill="none" className="stroke-foreground" strokeWidth="1.7">
                     <path d="M12 2l7 4v6c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-4z"></path>
                     <path d="M9 12h6"></path>
                     <path d="M9 16h4"></path>
                   </svg>
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Legal Draft Generator</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300 flex-grow">
+                <p className="text-sm text-muted-foreground flex-grow">
                   Generate court-ready legal drafts instantly.
                 </p>
-                <ShinyButton className="mt-4 bg-black dark:bg-black text-white">
+                <ShinyButton className="mt-4 bg-primary text-primary-foreground">
                   Generate Draft
                 </ShinyButton>
               </div>
             </MagicCard>
 
             {/* Judgment Updates */}
-            <MagicCard className="w-full h-auto hover:scale-105 transition-transform">
-              <div className="p-6 text-gray-900 dark:text-white flex flex-col h-full">
+            <MagicCard className="w-full h-auto hover:scale-105 transition-transform rounded-lg">
+              <div className="p-6 text-foreground flex flex-col h-full">
                 <div className="mb-4">
-                  <svg width="38" height="38" fill="none" className="stroke-gray-900 dark:stroke-white" strokeWidth="1.7">
+                  <svg width="38" height="38" fill="none" className="stroke-foreground" strokeWidth="1.7">
                     <path d="M21 6h-8l-2-3H3v17h18V6z"></path>
                     <path d="M3 13h18"></path>
                   </svg>
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Judgement Updates</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300 flex-grow">
+                <p className="text-sm text-muted-foreground flex-grow">
                   Latest judgements, legal updates, amendments.
                 </p>
-                <ShinyButton className="mt-4 bg-black dark:bg-black text-white">
+                <ShinyButton className="mt-4 bg-primary text-primary-foreground">
                   View Updates
                 </ShinyButton>
               </div>
@@ -162,11 +163,11 @@ export default function DashboardPage() {
 
           {/* Recent Activity */}
           <div className="mt-12 max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Recent Activity</h2>
-            <MagicCard className="w-full">
+            <h2 className="text-2xl font-bold text-foreground mb-6">Recent Activity</h2>
+            <MagicCard className="w-full rounded-lg">
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-6">More features coming soon</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-center py-8">
+                <h3 className="text-2xl font-bold text-foreground text-center mb-6">More features coming soon</h3>
+                <p className="text-muted-foreground text-center py-8">
                   No recent activity yet.
                 </p>
               </div>
@@ -176,6 +177,7 @@ export default function DashboardPage() {
 
         <MacbookScroll src="/macbook-image.png" />
       </div>
+      <FooterComponent />
     </>
   );
 }

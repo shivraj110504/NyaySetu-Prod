@@ -2,7 +2,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import DashNavbar from "@/components/navbar/DashNavbar";
 import { IconSend, IconUser, IconRobot, IconPaperclip, IconMicrophone, IconX, IconFileText, IconPhoto } from "@tabler/icons-react";
-import { MagicCard } from "@/components/ui/magic-card"
+import { MagicCard } from "@/components/ui/magic-card";
+import FooterComponent from "@/components/footer/FooterComponent";
 
 interface Message {
   id: string;
@@ -308,6 +309,7 @@ const ChatbotPage = () => {
           </div>
         </div>
       </MagicCard>
+      <FooterComponent />
     </>
   );
 };

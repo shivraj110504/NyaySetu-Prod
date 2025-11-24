@@ -13,7 +13,7 @@ export default function Home() {
       <NavbarComponent />
       <SparklesPreview />
 
-      <div className="bg-background flex flex-col items-center justify-center space-y-12 py-12 px-4 transition-colors duration-300">
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-12 py-12 px-4 transition-colors duration-300">
         {/* Heading and subheading */}
         <div className="text-center max-w-2xl mt-5">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -28,7 +28,7 @@ export default function Home() {
         {/* Cards grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1400px] mx-auto">
           {/* Card 1 – Chatbot */}
-          <MagicCard className="w-full h-auto hover:scale-105 transition-transform">
+          <MagicCard className="w-full h-auto hover:scale-105 transition-transform rounded-lg">
             <div className="p-6 text-foreground flex flex-col h-full">
               {/* Icon */}
               <div className="mb-4">
@@ -61,7 +61,7 @@ export default function Home() {
 
 
           {/* Card 2 – IPC Section Prediction */}
-          <MagicCard className="w-full h-auto hover:scale-105 transition-transform">
+          <MagicCard className="w-full h-auto hover:scale-105 transition-transform rounded-lg">
             <div className="p-6 text-foreground flex flex-col h-full">
               {/* Icon */}
               <div className="mb-4">
@@ -96,7 +96,7 @@ export default function Home() {
           </MagicCard>
 
           {/* Card 3 – Legal Draft Generator */}
-          <MagicCard className="w-full h-auto hover:scale-105 transition-transform">
+          <MagicCard className="w-full h-auto hover:scale-105 transition-transform rounded-lg">
             <div className="p-6 text-foreground flex flex-col h-full">
               {/* Icon */}
               <div className="mb-4">
@@ -132,7 +132,7 @@ export default function Home() {
           </MagicCard>
 
           {/* Card 4 – Law & Judgement Updation */}
-          <MagicCard className="w-full h-auto hover:scale-105 transition-transform">
+          <MagicCard className="w-full h-auto hover:scale-105 transition-transform rounded-lg">
             <div className="p-6 text-foreground flex flex-col h-full">
               {/* Icon */}
               <div className="mb-4">
@@ -173,7 +173,7 @@ export default function Home() {
 
 
 
-      <div className="bg-background flex flex-col items-center justify-center space-y-12 py-12 px-4 transition-colors duration-300">
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-12 py-12 px-4 transition-colors duration-300">
         {/* Heading and subheading */}
         <div className="text-center max-w-2xl mt-5">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -188,7 +188,7 @@ export default function Home() {
         {/* Cards grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1400px] mx-auto">
           {/* Card 1 – Smart Automated Document */}
-          <MagicCard className="w-full h-auto hover:scale-105 transition-transform">
+          <MagicCard className="w-full h-auto hover:scale-105 transition-transform rounded-lg">
             <div className="p-6 text-foreground flex flex-col h-full">
               {/* Icon */}
               <div className="mb-4">
@@ -219,7 +219,7 @@ export default function Home() {
           </MagicCard>
 
           {/* Card 2 – Multi Agent Collaboration */}
-          <MagicCard className="w-full h-auto hover:scale-105 transition-transform">
+          <MagicCard className="w-full h-auto hover:scale-105 transition-transform rounded-lg">
             <div className="p-6 text-foreground flex flex-col h-full">
               {/* Icon */}
               <div className="mb-4">
@@ -253,7 +253,7 @@ export default function Home() {
           </MagicCard>
 
           {/* Card 3 – Agentic Approach */}
-          <MagicCard className="w-full h-auto hover:scale-105 transition-transform">
+          <MagicCard className="w-full h-auto hover:scale-105 transition-transform rounded-lg">
             <div className="p-6 text-foreground flex flex-col h-full">
               {/* Icon */}
               <div className="mb-4">
@@ -288,7 +288,7 @@ export default function Home() {
           </MagicCard>
 
           {/* Card 4 – 24/7 Availability */}
-          <MagicCard className="w-full h-auto hover:scale-105 transition-transform">
+          <MagicCard className="w-full h-auto hover:scale-105 transition-transform rounded-lg">
             <div className="p-6 text-foreground flex flex-col h-full">
               {/* Icon */}
               <div className="mb-4">

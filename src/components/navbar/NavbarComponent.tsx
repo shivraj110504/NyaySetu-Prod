@@ -57,7 +57,13 @@ export default function NavbarComponent() {
           </NavbarButton>
 
           <Link href="/signup">
-            <ShimmerButton>Sign Up</ShimmerButton>
+            <ShimmerButton
+              background="var(--primary)"
+              shimmerColor="var(--primary-foreground)"
+              className="text-primary-foreground dark:[--bg:var(--accent)] dark:[--shimmer-color:var(--accent-foreground)] dark:text-accent-foreground"
+            >
+              Sign Up
+            </ShimmerButton>
           </Link>
         </div>
       </NavBody>

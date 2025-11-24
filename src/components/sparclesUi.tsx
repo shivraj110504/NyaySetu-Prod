@@ -21,9 +21,9 @@ export function SparklesPreview() {
     return () => observer.disconnect();
   }, []);
   return (
-    <div className="h-screen w-full bg-white dark:bg-black flex flex-col items-center justify-center overflow-hidden relative transition-colors duration-300">
+    <div className="h-screen w-full bg-background flex flex-col items-center justify-center overflow-hidden relative transition-colors duration-300">
       {/* Main title: keep same size as before */}
-      <h1 className="md:text-7xl text-3xl lg:text-9xl font-bold text-center text-gray-900 dark:text-white relative z-20">
+      <h1 className="md:text-7xl text-3xl lg:text-9xl font-bold text-center text-foreground relative z-20">
         NyaySetu
       </h1>
 
@@ -46,20 +46,20 @@ export function SparklesPreview() {
         />
 
         {/* Radial Gradient mask */}
-        <div className="absolute inset-0 w-full h-full bg-white dark:bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
+        <div className="absolute inset-0 w-full h-full bg-background [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
       </div>
 
       {/* Subtitle / features below sparkles */}
       <div className="text-center mt-12 space-y-4 max-w-3xl">
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white">
+        <h2 className="text-xl md:text-2xl font-semibold text-foreground">
           AI-Powered Justice for Every Citizen
         </h2>
 
-        <ul className="flex flex-col md:flex-row items-center justify-center gap-6 mt-4 text-gray-600 dark:text-gray-300 text-sm md:text-base font-medium">
-          <li className="before:content-['•'] before:text-gray-900 dark:before:text-white before:mr-2">Chatbot</li>
-          <li className="before:content-['•'] before:text-gray-900 dark:before:text-white before:mr-2">IPC Section Prediction</li>
-          <li className="before:content-['•'] before:text-gray-900 dark:before:text-white before:mr-2">Legal Draft Generator</li>
-          <li className="before:content-['•'] before:text-gray-900 dark:before:text-white before:mr-2">Law & Judgement Updates</li>
+        <ul className="flex flex-col md:flex-row items-center justify-center gap-6 mt-4 text-muted-foreground text-sm md:text-base font-medium">
+          <li className="before:content-['•'] before:text-foreground before:mr-2">Chatbot</li>
+          <li className="before:content-['•'] before:text-foreground before:mr-2">IPC Section Prediction</li>
+          <li className="before:content-['•'] before:text-foreground before:mr-2">Legal Draft Generator</li>
+          <li className="before:content-['•'] before:text-foreground before:mr-2">Law & Judgement Updates</li>
         </ul>
       </div>
     </div>

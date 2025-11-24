@@ -1,13 +1,14 @@
 // app/profile/page.tsx
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import LoggedNav from "@/components/navbar/DashNavbar";
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 import { Button } from "@/components/ui/button";
 import { MagicCard } from "@/components/ui/magic-card";
+import FooterComponent from "@/components/footer/FooterComponent";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -22,6 +23,44 @@ export default function ProfilePage() {
   const handleLogout = async () => {
     await authClient.signOut();
     router.push("/login");
+  };
+
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDeleteAccount = async () => {
+    if (!showDeleteConfirm) {
+      setShowDeleteConfirm(true);
+      return;
+    }
+
+    setIsDeleting(true);
+    try {
+      // Call the delete account API
+      const response = await fetch("/api/auth/delete-account", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      console.log("API Response:", data);
+
+      if (!response.ok) {
+        const errorMsg = data.details || data.error || "Failed to delete account";
+        throw new Error(errorMsg);
+      }
+
+      // Sign out and redirect to home page
+      await authClient.signOut();
+      router.push("/");
+    } catch (error: any) {
+      console.error("Error deleting account:", error);
+      alert(`Failed to delete account: ${error.message || "Please try again."}`);
+      setIsDeleting(false);
+      setShowDeleteConfirm(false);
+    }
   };
 
   if (isPending || !session) {
@@ -77,13 +116,49 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            {/* Logout Button */}
-            <Button
-              onClick={handleLogout}
-              className="mt-8 bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg"
-            >
-              Logout
-            </Button>
+            {/* Logout and Delete Account Buttons */}
+            <div className="mt-8 w-full">
+              {!showDeleteConfirm ? (
+                <div className="flex gap-3">
+                  <Button
+                    onClick={handleLogout}
+                    variant="outline"
+                    className="flex-1 border-red-500 text-red-500 hover:bg-red-50 dark:hover:bg-red-950"
+                  >
+                    Logout
+                  </Button>
+                  <Button
+                    onClick={handleDeleteAccount}
+                    className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+                  >
+                    Delete Account
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <p className="text-sm text-red-500 text-center font-medium">
+                    Are you sure? This action cannot be undone!
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={handleDeleteAccount}
+                      disabled={isDeleting}
+                      className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+                    >
+                      {isDeleting ? "Deleting..." : "Yes, Delete"}
+                    </Button>
+                    <Button
+                      onClick={() => setShowDeleteConfirm(false)}
+                      disabled={isDeleting}
+                      variant="outline"
+                      className="flex-1"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </MagicCard>
 
@@ -94,6 +169,7 @@ export default function ProfilePage() {
           </p>
         </div>
       </div>
+      <FooterComponent />
     </>
   );
 }
