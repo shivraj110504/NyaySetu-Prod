@@ -1,9 +1,9 @@
-
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useRef, useState, useEffect } from "react"
 import { Moon, Sun } from "lucide-react"
 import { flushSync } from "react-dom"
+import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
 
@@ -17,50 +17,28 @@ export const AnimatedThemeToggler = ({
   duration = 400,
   ...props
 }: AnimatedThemeTogglerProps) => {
-  // Initialize state directly from localStorage/system preference
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof window === 'undefined') return false
-    const savedTheme = localStorage.getItem("theme")
-    if (savedTheme) {
-      return savedTheme === "dark"
-    }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-  })
-  
+  const { theme, setTheme, resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const isTogglingRef = useRef(false)
 
   useEffect(() => {
-    // Apply the initial theme to the DOM
-    if (isDark) {
-      document.documentElement.classList.add("dark")
-      localStorage.setItem("theme", "dark")
-    } else {
-      document.documentElement.classList.remove("dark")
-      localStorage.setItem("theme", "light")
-    }
-  }, [isDark])
+    setMounted(true)
+  }, [])
 
   const toggleTheme = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     e.stopPropagation()
-    
+
     if (isTogglingRef.current) return
     isTogglingRef.current = true
 
-    const newTheme = !isDark
+    const isDark = resolvedTheme === "dark"
+    const newTheme = isDark ? "light" : "dark"
 
     // Check if View Transition API is supported
     if (!document.startViewTransition || !buttonRef.current) {
-      // Fallback for browsers without View Transition API
-      setIsDark(newTheme)
-      if (newTheme) {
-        document.documentElement.classList.add("dark")
-        localStorage.setItem("theme", "dark")
-      } else {
-        document.documentElement.classList.remove("dark")
-        localStorage.setItem("theme", "light")
-      }
+      setTheme(newTheme)
       setTimeout(() => {
         isTogglingRef.current = false
       }, 100)
@@ -77,14 +55,7 @@ export const AnimatedThemeToggler = ({
 
     const transition = document.startViewTransition(() => {
       flushSync(() => {
-        setIsDark(newTheme)
-        if (newTheme) {
-          document.documentElement.classList.add("dark")
-          localStorage.setItem("theme", "dark")
-        } else {
-          document.documentElement.classList.remove("dark")
-          localStorage.setItem("theme", "light")
-        }
+        setTheme(newTheme)
       })
     })
 
@@ -107,7 +78,22 @@ export const AnimatedThemeToggler = ({
     transition.finished.finally(() => {
       isTogglingRef.current = false
     })
-  }, [isDark, duration])
+  }, [resolvedTheme, setTheme, duration])
+
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <button
+        className={cn(className)}
+        aria-label="Toggle theme"
+        {...props}
+      >
+        <div className="h-5 w-5" />
+      </button>
+    )
+  }
+
+  const isDark = resolvedTheme === "dark"
 
   return (
     <button

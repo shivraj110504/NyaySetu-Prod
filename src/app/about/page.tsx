@@ -1,11 +1,9 @@
-import React from "react";
+
 import { TracingBeam } from "@/components/ui/tracing-beam";
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 import DashNavbar from "@/components/navbar/DashNavbar";
 import FooterComponent from "@/components/footer/FooterComponent";
 import { MagicCard } from "@/components/ui/magic-card";
-import { CometCard } from "@/components/ui/comet-card";
-import { AnimatedThemeTogglerDemo } from "@/components/AnimatedThemeTogglerDemo";
 
 export default function AboutPage() {
   return (
@@ -19,7 +17,6 @@ export default function AboutPage() {
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white">
               About NyaySetu
             </h1>
-            <AnimatedThemeTogglerDemo />
           </div>
           <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
             Smart Legal Automation Platform empowering citizens with AI-driven
@@ -242,7 +239,7 @@ export default function AboutPage() {
                 </div>
               </MagicCard>
 
-              <NeonGradientCard className="w-full mb-6 !bg-gray-50 dark:!bg-[#171717] [&>*]:!bg-gray-50 dark:[&>*]:!bg-[#171717] [&>*]:!p-0">
+             <MagicCard className="w-full mb-6 rounded-lg">
                 <div className="p-5 text-gray-900 dark:text-white">
                   <h4 className="font-semibold mb-3">Key Features</h4>
                   <div className="grid md:grid-cols-2 gap-3 text-sm text-gray-600 dark:text-gray-300">
@@ -254,7 +251,7 @@ export default function AboutPage() {
                     <div>✨ Suggested legal actions</div>
                   </div>
                 </div>
-              </NeonGradientCard>
+              </MagicCard>
 
               <div className="flex flex-wrap gap-2">
                 {[
@@ -549,7 +546,7 @@ export default function AboutPage() {
 
             {/* Footer Section */}
             <div className="mb-10">
-              <NeonGradientCard className="w-full !bg-gray-50 dark:!bg-[#171717] [&>*]:!bg-gray-50 dark:[&>*]:!bg-[#171717] [&>*]:!p-0">
+              <MagicCard className="w-full mb-6 rounded-lg">
                 <div className="p-8 text-gray-900 dark:text-white text-center">
                   <h3 className="text-2xl md:text-3xl font-bold mb-4">
                     Empowering Legal Access for All
@@ -564,7 +561,7 @@ export default function AboutPage() {
                     professional legal advice
                   </div>
                 </div>
-              </NeonGradientCard>
+              </MagicCard>
             </div>
           </div>
         </TracingBeam>

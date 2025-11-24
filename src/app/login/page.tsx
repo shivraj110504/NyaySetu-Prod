@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { IconBrandGithub, IconBrandGoogle, IconMail, IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { authClient } from "@/lib/auth-client";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 
 function LoginForm() {
   const searchParams = useSearchParams();
@@ -135,10 +136,13 @@ function LoginForm() {
   }
 
   return (
-    <div className="flex items-center justify-center p-8 bg-black min-h-screen">
-      <div className="shadow-input mx-auto w-full max-w-md rounded-2xl p-6 md:p-8 bg-[#171717]">
-        <h2 className="text-xl font-bold text-white">Welcome Back</h2>
-        <p className="mt-2 max-w-sm text-sm text-gray-300">Login to Nyaysetu AI</p>
+    <div className="flex items-center justify-center p-8 bg-gray-50 dark:bg-black min-h-screen relative transition-colors duration-300">
+      <div className="absolute top-4 right-4">
+        <AnimatedThemeToggler />
+      </div>
+      <div className="shadow-input mx-auto w-full max-w-md rounded-2xl p-6 md:p-8 bg-white dark:bg-[#171717] transition-colors duration-300">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Welcome Back</h2>
+        <p className="mt-2 max-w-sm text-sm text-gray-600 dark:text-gray-300">Login to Nyaysetu AI</p>
 
         {success && (
           <div className="mt-4 p-3 rounded-md bg-green-500/10 border border-green-500/50">
@@ -169,7 +173,7 @@ function LoginForm() {
             <BottomGradient />
           </button>
 
-          
+
           {/* GitHub - Primary Option */}
           <button
             type="button"
@@ -185,19 +189,19 @@ function LoginForm() {
           </button>
 
           <div className="my-6 flex items-center">
-            <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-600 to-transparent" />
+            <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent" />
             <span className="px-4 text-sm text-gray-500">or</span>
-            <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-600 to-transparent" />
+            <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent" />
           </div>
 
           {/* Email Option - Expandable */}
           <button
             type="button"
             onClick={() => setShowEmailForm(!showEmailForm)}
-            className="group/btn shadow-input relative flex h-12 w-full items-center justify-center space-x-3 rounded-md bg-transparent border border-gray-700 px-4 font-medium text-white hover:bg-gray-900/50 transition-colors"
+            className="group/btn shadow-input relative flex h-12 w-full items-center justify-center space-x-3 rounded-md bg-transparent border border-gray-300 dark:border-gray-700 px-4 font-medium text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900/50 transition-colors"
           >
-            <IconMail className="h-5 w-5 text-white" />
-            <span className="text-sm text-white">Continue with Email</span>
+            <IconMail className="h-5 w-5 text-gray-700 dark:text-white" />
+            <span className="text-sm text-gray-700 dark:text-white">Continue with Email</span>
             {showEmailForm ? (
               <IconChevronUp className="h-4 w-4 text-gray-400 ml-auto" />
             ) : (
@@ -212,7 +216,7 @@ function LoginForm() {
           )}>
             <form className="pt-4 space-y-4" onSubmit={handleSubmit}>
               <LabelInputContainer>
-                <Label htmlFor="email" className="text-white">Email</Label>
+                <Label htmlFor="email" className="text-gray-700 dark:text-white">Email</Label>
                 <Input
                   id="email"
                   placeholder="abc@gmail.com"
@@ -221,13 +225,12 @@ function LoginForm() {
                   onChange={handleChange}
                   required={showEmailForm}
                   disabled={loading}
-                  className="text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                  style={{ backgroundColor: "#171717", borderColor: "#3A3A3A" }}
+                  className="text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white dark:bg-[#171717] border-gray-300 dark:border-[#3A3A3A]"
                 />
               </LabelInputContainer>
 
               <LabelInputContainer>
-                <Label htmlFor="password" className="text-white">Password</Label>
+                <Label htmlFor="password" className="text-gray-700 dark:text-white">Password</Label>
                 <Input
                   id="password"
                   placeholder="••••••••"
@@ -236,8 +239,7 @@ function LoginForm() {
                   onChange={handleChange}
                   required={showEmailForm}
                   disabled={loading}
-                  className="text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                  style={{ backgroundColor: "#171717", borderColor: "#3A3A3A" }}
+                  className="text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white dark:bg-[#171717] border-gray-300 dark:border-[#3A3A3A]"
                 />
               </LabelInputContainer>
 
@@ -252,9 +254,9 @@ function LoginForm() {
             </form>
           </div>
 
-          <p className="text-sm text-gray-400 text-center pt-4">
+          <p className="text-sm text-gray-600 dark:text-gray-400 text-center pt-4">
             Don&apos;t have an account?{" "}
-            <a href="/signup" className="text-cyan-500 hover:underline">Sign up</a>
+            <a href="/signup" className="text-cyan-600 dark:text-cyan-500 hover:underline">Sign up</a>
           </p>
         </div>
       </div>

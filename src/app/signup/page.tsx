@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { IconBrandGithub, IconBrandGoogle, IconMail, IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { authClient } from "@/lib/auth-client";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 
 const SignupPage = () => {
   const router = useRouter();
@@ -175,19 +176,22 @@ const SignupPage = () => {
   // ============================================
   if (step === "verify") {
     return (
-      <div className="flex items-center justify-center p-4 min-h-screen bg-black">
-        <div className="shadow-input mx-auto w-full max-w-md rounded-2xl p-6 bg-[#171717]">
-          <h2 className="text-xl font-bold text-white">Verify Your Email</h2>
-          <p className="mt-2 text-sm text-gray-300">
+      <div className="flex items-center justify-center p-4 min-h-screen bg-gray-50 dark:bg-black transition-colors duration-300 relative">
+        <div className="absolute top-4 right-4">
+          <AnimatedThemeToggler />
+        </div>
+        <div className="shadow-input mx-auto w-full max-w-md rounded-2xl p-6 bg-white dark:bg-[#171717] transition-colors duration-300">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Verify Your Email</h2>
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
             We sent a 6-digit code to{" "}
-            <span className="text-cyan-500">{formData.email}</span>
+            <span className="text-cyan-600 dark:text-cyan-500">{formData.email}</span>
           </p>
 
           {error && <ErrorBox message={error} />}
 
           <form className="mt-6" onSubmit={handleVerifyOTP}>
             <LabelInputContainer className="mb-5">
-              <Label htmlFor="otp" className="text-white">Enter OTP</Label>
+              <Label htmlFor="otp" className="text-gray-700 dark:text-white">Enter OTP</Label>
               <Input
                 id="otp"
                 placeholder="123456"
@@ -196,8 +200,7 @@ const SignupPage = () => {
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
                 required
-                className="text-white text-center text-2xl tracking-widest placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                style={{ backgroundColor: "#171717", borderColor: "#3A3A3A" }}
+                className="text-center text-2xl tracking-widest placeholder-gray-500 dark:placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white dark:bg-[#171717] border-gray-300 dark:border-[#3A3A3A] text-gray-900 dark:text-white"
               />
             </LabelInputContainer>
 
@@ -215,7 +218,7 @@ const SignupPage = () => {
                 type="button"
                 onClick={handleResendOTP}
                 disabled={loading}
-                className="text-sm text-cyan-500 hover:underline disabled:opacity-50"
+                className="text-sm text-cyan-600 dark:text-cyan-500 hover:underline disabled:opacity-50"
               >
                 Did not receive code? Resend OTP
               </button>
@@ -223,7 +226,7 @@ const SignupPage = () => {
               <button
                 type="button"
                 onClick={() => setStep("signup")}
-                className="text-sm text-gray-400 hover:text-white"
+                className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
               >
                 ← Back to signup
               </button>
@@ -238,10 +241,13 @@ const SignupPage = () => {
   // RENDER: SIGNUP FORM
   // ============================================
   return (
-    <div className="flex items-center justify-center p-4 min-h-screen bg-black">
-      <div className="shadow-input mx-auto w-full max-w-md rounded-2xl p-5 bg-[#171717]">
-        <h2 className="text-lg font-bold text-white">Welcome to Nyaysetu AI</h2>
-        <p className="mt-1 text-sm text-gray-300">Create your account to get started</p>
+    <div className="flex items-center justify-center p-4 min-h-screen bg-gray-50 dark:bg-black transition-colors duration-300 relative">
+      <div className="absolute top-4 right-4">
+        <AnimatedThemeToggler />
+      </div>
+      <div className="shadow-input mx-auto w-full max-w-md rounded-2xl p-5 bg-white dark:bg-[#171717] transition-colors duration-300">
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white">Welcome to Nyaysetu AI</h2>
+        <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">Create your account to get started</p>
 
         {error && <ErrorBox message={error} />}
 
@@ -261,7 +267,7 @@ const SignupPage = () => {
             <BottomGradient />
           </button>
 
-          
+
           {/* GitHub - Primary Option */}
           <button
             type="button"
@@ -278,19 +284,19 @@ const SignupPage = () => {
 
           {/* Divider */}
           <div className="flex items-center py-1">
-            <div className="h-[1px] flex-1 bg-gray-700" />
+            <div className="h-[1px] flex-1 bg-gray-300 dark:bg-gray-700" />
             <span className="px-3 text-xs text-gray-500">or</span>
-            <div className="h-[1px] flex-1 bg-gray-700" />
+            <div className="h-[1px] flex-1 bg-gray-300 dark:bg-gray-700" />
           </div>
 
           {/* Email Option - Expandable */}
           <button
             type="button"
             onClick={() => setShowEmailForm(!showEmailForm)}
-            className="group/btn shadow-input relative flex h-11 w-full items-center justify-center space-x-2 rounded-md bg-transparent border border-gray-700 px-4 font-medium text-white hover:bg-gray-900/50 transition-colors"
+            className="group/btn shadow-input relative flex h-11 w-full items-center justify-center space-x-2 rounded-md bg-transparent border border-gray-300 dark:border-gray-700 px-4 font-medium text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900/50 transition-colors"
           >
-            <IconMail className="h-5 w-5 text-white" />
-            <span className="text-sm text-white">Continue with Email</span>
+            <IconMail className="h-5 w-5 text-gray-700 dark:text-white" />
+            <span className="text-sm text-gray-700 dark:text-white">Continue with Email</span>
             {showEmailForm ? (
               <IconChevronUp className="h-4 w-4 text-gray-400 ml-auto" />
             ) : (
@@ -307,7 +313,7 @@ const SignupPage = () => {
               {/* First & Last Name - Side by Side */}
               <div className="flex space-x-2">
                 <LabelInputContainer>
-                  <Label htmlFor="firstName" className="text-white text-xs">First name</Label>
+                  <Label htmlFor="firstName" className="text-gray-700 dark:text-white text-xs">First name</Label>
                   <Input
                     id="firstName"
                     placeholder="Shivraj"
@@ -315,13 +321,12 @@ const SignupPage = () => {
                     value={formData.firstName}
                     onChange={handleChange}
                     required={showEmailForm}
-                    className="text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 h-9 text-sm"
-                    style={{ backgroundColor: "#171717", borderColor: "#3A3A3A" }}
+                    className="text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 h-9 text-sm bg-white dark:bg-[#171717] border-gray-300 dark:border-[#3A3A3A]"
                   />
                 </LabelInputContainer>
 
                 <LabelInputContainer>
-                  <Label htmlFor="lastName" className="text-white text-xs">Last name</Label>
+                  <Label htmlFor="lastName" className="text-gray-700 dark:text-white text-xs">Last name</Label>
                   <Input
                     id="lastName"
                     placeholder="Taware"
@@ -329,15 +334,14 @@ const SignupPage = () => {
                     value={formData.lastName}
                     onChange={handleChange}
                     required={showEmailForm}
-                    className="text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 h-9 text-sm"
-                    style={{ backgroundColor: "#171717", borderColor: "#3A3A3A" }}
+                    className="text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 h-9 text-sm bg-white dark:bg-[#171717] border-gray-300 dark:border-[#3A3A3A]"
                   />
                 </LabelInputContainer>
               </div>
 
               {/* Email */}
               <LabelInputContainer>
-                <Label htmlFor="email" className="text-white text-xs">Email Address</Label>
+                <Label htmlFor="email" className="text-gray-700 dark:text-white text-xs">Email Address</Label>
                 <Input
                   id="email"
                   placeholder="abc@gmail.com"
@@ -345,15 +349,14 @@ const SignupPage = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required={showEmailForm}
-                  className="text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 h-9 text-sm"
-                  style={{ backgroundColor: "#171717", borderColor: "#3A3A3A" }}
+                  className="text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 h-9 text-sm bg-white dark:bg-[#171717] border-gray-300 dark:border-[#3A3A3A]"
                 />
               </LabelInputContainer>
 
               {/* Password & Confirm - Side by Side */}
               <div className="flex space-x-2">
                 <LabelInputContainer>
-                  <Label htmlFor="password" className="text-white text-xs">Password</Label>
+                  <Label htmlFor="password" className="text-gray-700 dark:text-white text-xs">Password</Label>
                   <Input
                     id="password"
                     placeholder="••••••••"
@@ -361,13 +364,12 @@ const SignupPage = () => {
                     value={formData.password}
                     onChange={handleChange}
                     required={showEmailForm}
-                    className="text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 h-9 text-sm"
-                    style={{ backgroundColor: "#171717", borderColor: "#3A3A3A" }}
+                    className="text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 h-9 text-sm bg-white dark:bg-[#171717] border-gray-300 dark:border-[#3A3A3A]"
                   />
                 </LabelInputContainer>
 
                 <LabelInputContainer>
-                  <Label htmlFor="confirmPassword" className="text-white text-xs">Confirm</Label>
+                  <Label htmlFor="confirmPassword" className="text-gray-700 dark:text-white text-xs">Confirm</Label>
                   <Input
                     id="confirmPassword"
                     placeholder="••••••••"
@@ -375,8 +377,7 @@ const SignupPage = () => {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     required={showEmailForm}
-                    className="text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 h-9 text-sm"
-                    style={{ backgroundColor: "#171717", borderColor: "#3A3A3A" }}
+                    className="text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 h-9 text-sm bg-white dark:bg-[#171717] border-gray-300 dark:border-[#3A3A3A]"
                   />
                 </LabelInputContainer>
               </div>
@@ -392,9 +393,9 @@ const SignupPage = () => {
             </form>
           </div>
 
-          <p className="text-sm text-gray-400 text-center pt-2">
+          <p className="text-sm text-gray-600 dark:text-gray-400 text-center pt-2">
             Already have an account?{" "}
-            <a href="/login" className="text-cyan-500 hover:underline">Login</a>
+            <a href="/login" className="text-cyan-600 dark:text-cyan-500 hover:underline">Login</a>
           </p>
         </div>
       </div>

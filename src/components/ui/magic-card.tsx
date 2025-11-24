@@ -1,8 +1,8 @@
-
 "use client"
 
-import React, { useCallback, useEffect } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { motion, useMotionTemplate, useMotionValue } from "motion/react"
+import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
 
@@ -20,13 +20,21 @@ export function MagicCard({
   children,
   className,
   gradientSize = 200,
-  gradientColor = "#262626",
+  gradientColor,
   gradientOpacity = 0.8,
   gradientFrom = "#9E7AFF",
   gradientTo = "#FE8BBB",
 }: MagicCardProps) {
+  const { resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const mouseX = useMotionValue(-gradientSize)
   const mouseY = useMotionValue(-gradientSize)
+
   const reset = useCallback(() => {
     mouseX.set(-gradientSize)
     mouseY.set(-gradientSize)
@@ -69,6 +77,13 @@ export function MagicCard({
     }
   }, [reset])
 
+  // Theme-aware colors
+  const isDark = mounted && resolvedTheme === "dark"
+
+  // Light mode: subtle gray hover. Dark mode: dark gray hover.
+  const defaultGradientColor = isDark ? "#262626" : "#F3F4F6"
+  const effectiveGradientColor = gradientColor || defaultGradientColor
+
   return (
     <div
       className={cn("group relative rounded-[inherit]", className)}
@@ -76,6 +91,7 @@ export function MagicCard({
       onPointerLeave={reset}
       onPointerEnter={reset}
     >
+      {/* Border Gradient */}
       <motion.div
         className="bg-border pointer-events-none absolute inset-0 rounded-[inherit] duration-300 group-hover:opacity-100"
         style={{
@@ -88,12 +104,16 @@ export function MagicCard({
           `,
         }}
       />
-      <div className="absolute inset-px rounded-[inherit] bg-white dark:bg-[#0A0A0A]" />  
+
+      {/* Background */}
+      <div className="absolute inset-px rounded-[inherit] bg-white dark:bg-[#0A0A0A]" />
+
+      {/* Spotlight Hover Effect */}
       <motion.div
         className="pointer-events-none absolute inset-px rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
           background: useMotionTemplate`
-            radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${gradientColor}, transparent 100%)
+            radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${effectiveGradientColor}, transparent 100%)
           `,
           opacity: gradientOpacity,
         }}

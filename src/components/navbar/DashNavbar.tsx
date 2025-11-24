@@ -62,12 +62,8 @@ export default function DashNavbar() {
         {/* Theme Toggle + Profile Section */}
         <div className="flex items-center gap-2">
           {/* Theme Toggle Button */}
-          <AnimatedThemeToggler 
-            className={`text-2xl p-1 rounded-full transition-colors ${
-              isScrolled 
-                ? "text-gray-700 dark:text-white hover:text-gray-500 dark:hover:text-gray-300" 
-                : "text-white hover:text-gray-300"
-            }`}
+          <AnimatedThemeToggler
+            className="relative z-50 cursor-pointer text-2xl p-1 rounded-full transition-colors text-gray-700 dark:text-white hover:text-gray-500 dark:hover:text-gray-300"
           />
 
           {/* Profile Dropdown */}
@@ -75,11 +71,7 @@ export default function DashNavbar() {
             <button
               type="button"
               onClick={() => setProfileOpen(!profileOpen)}
-              className={`text-2xl p-1 rounded-full transition-colors ${
-                isScrolled 
-                  ? "text-gray-700 dark:text-white hover:text-gray-500 dark:hover:text-gray-300" 
-                  : "text-white hover:text-gray-300"
-              }`}
+              className="text-2xl p-1 rounded-full transition-colors text-gray-700 dark:text-white hover:text-gray-500 dark:hover:text-gray-300"
               aria-label="User profile menu"
             >
               <FaUserCircle />
@@ -120,12 +112,8 @@ export default function DashNavbar() {
         <MobileNavHeader>
           <NavbarLogo isScrolled={isScrolled} />
           <div className="flex items-center gap-2">
-            <AnimatedThemeToggler 
-              className={`text-xl p-1 transition-colors ${
-                isScrolled 
-                  ? "text-gray-700 dark:text-white" 
-                  : "text-white"
-              }`}
+            <AnimatedThemeToggler
+              className="text-xl p-1 transition-colors text-gray-700 dark:text-white"
             />
             <MobileNavToggle
               isOpen={menuOpen}

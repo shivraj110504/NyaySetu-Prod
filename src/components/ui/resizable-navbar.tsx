@@ -88,9 +88,9 @@ export const Navbar = ({ children, className }: NavbarProps) => {
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
           ? React.cloneElement(
-              child as React.ReactElement<{ visible?: boolean }>,
-              { visible },
-            )
+            child as React.ReactElement<{ visible?: boolean }>,
+            { visible },
+          )
           : child,
       )}
     </motion.div>
@@ -112,9 +112,9 @@ export const NavBody = ({ children, className, visible, isScrolled }: NavBodyPro
       style={{ minWidth: "800px" }}
       className={cn(
         "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full px-4 py-2 lg:flex transition-all duration-300",
-        visible 
-          ? "bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.15)]" 
-          : "bg-black/90 dark:bg-black/90 backdrop-blur-md border border-transparent",
+        visible
+          ? "bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.15)]"
+          : "bg-transparent dark:bg-black/90 backdrop-blur-md border border-transparent",
         className,
       )}
     >
@@ -131,8 +131,8 @@ export const NavItems = ({ items, className, onItemClick, isScrolled }: NavItems
     <motion.div
       onMouseLeave={() => setHovered(null)}
       className={cn(
-        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium transition duration-200 lg:flex lg:space-x-2",
-        isScrolled ? "text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300" : "text-white hover:text-gray-300",
+        "hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium transition duration-200 lg:flex lg:space-x-2",
+        "text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300",
         className,
       )}
     >
@@ -150,7 +150,7 @@ export const NavItems = ({ items, className, onItemClick, isScrolled }: NavItems
               onClick={onItemClick}
               className={cn(
                 "relative px-4 py-2 cursor-pointer",
-                isScrolled ? "text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300" : "text-white hover:text-gray-300"
+                "text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
               )}
               href={item.link || "#"}
             >
@@ -207,9 +207,9 @@ export const MobileNav = ({ children, className, visible, isScrolled }: MobileNa
       transition={{ type: "spring", stiffness: 200, damping: 50 }}
       className={cn(
         "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between px-0 py-2 lg:hidden transition-all duration-300",
-        visible 
-          ? "bg-white/70 dark:bg-neutral-950/70 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.15)]" 
-          : "bg-black/90 dark:bg-black/90 backdrop-blur-md border border-transparent",
+        visible
+          ? "bg-white/70 dark:bg-neutral-950/70 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.15)]"
+          : "bg-transparent dark:bg-black/90 backdrop-blur-md border border-transparent",
         className,
       )}
     >
@@ -255,20 +255,20 @@ export const MobileNavToggle = ({
   onClick,
   isScrolled,
 }: MobileNavToggleProps) => (isOpen ? (
-  <IconX 
+  <IconX
     className={cn(
       "transition-colors cursor-pointer",
-      isScrolled ? "text-gray-900 dark:text-white" : "text-white"
-    )} 
-    onClick={onClick} 
+      "text-gray-900 dark:text-white"
+    )}
+    onClick={onClick}
   />
 ) : (
-  <IconMenu2 
+  <IconMenu2
     className={cn(
       "transition-colors cursor-pointer",
-      isScrolled ? "text-gray-900 dark:text-white" : "text-white"
-    )} 
-    onClick={onClick} 
+      "text-gray-900 dark:text-white"
+    )}
+    onClick={onClick}
   />
 ));
 
@@ -293,9 +293,9 @@ export const NavbarLogo = ({ isScrolled }: NavbarLogoProps) => {
 
   // When scrolled: use theme-based logo (logo.png for light, logo2.png for dark)
   // When not scrolled: always use logo2.png (white logo on black background)
-  const logoSrc = isScrolled 
-    ? (isDark ? "/logo2.png" : "/logo.png")
-    : "/logo2.png";
+  // When scrolled: use theme-based logo (logo.png for light, logo2.png for dark)
+  // When not scrolled: always use logo2.png (white logo on black background)
+  const logoSrc = isDark ? "/logo2.png" : "/logo.png";
 
   return (
     <a
@@ -305,7 +305,7 @@ export const NavbarLogo = ({ isScrolled }: NavbarLogoProps) => {
       <img src={logoSrc} alt="logo" width={50} height={50} />
       <span className={cn(
         "font-medium transition-colors",
-        isScrolled ? "text-gray-900 dark:text-white" : "text-white"
+        "text-gray-900 dark:text-white"
       )}>
         NyaySetu AI
       </span>
