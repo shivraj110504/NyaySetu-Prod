@@ -31,6 +31,7 @@ export default function DashNavbar() {
     {
       name: "More",
       submenu: [
+        { name: "Your Uploads", link: "/blockchain" },
         { name: "About", link: "/about" },
         { name: "Training", link: "/training" },
         { name: "Feature", link: "/features" },

@@ -13,10 +13,22 @@ import FooterComponent from "@/components/footer/FooterComponent";
 export default function ProfilePage() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
+  const [secretKey, setSecretKey] = useState<string>("");
+  const [loadingKey, setLoadingKey] = useState(true);
 
   useEffect(() => {
     if (!isPending && !session) {
       router.push("/login");
+      return;
+    }
+
+    // Get blockchain secret key from session
+    if (session?.user) {
+      const bKey = (session.user as any).blockchainKey;
+      if (bKey) {
+        setSecretKey(bKey);
+      }
+      setLoadingKey(false);
     }
   }, [session, isPending, router]);
 
@@ -106,6 +118,20 @@ export default function ProfilePage() {
               <div className="flex">
                 <span className="text-muted-foreground font-medium w-28">Email:</span>
                 <span className="text-foreground">{user.email}</span>
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-muted-foreground font-medium mb-2">Secret Key:</span>
+                {loadingKey ? (
+                  <span className="text-muted-foreground text-sm">Loading...</span>
+                ) : secretKey ? (
+                  <div className="bg-muted p-3 rounded-md">
+                    <span className="font-mono text-sm text-foreground break-all">{secretKey}</span>
+                    <p className="text-xs text-yellow-500 mt-2">⚠️ Keep this key safe for blockchain access</p>
+                  </div>
+                ) : (
+                  <span className="text-muted-foreground text-sm">Not available</span>
+                )}
               </div>
 
               <div className="flex">

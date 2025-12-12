@@ -89,6 +89,20 @@ const SignupPage = () => {
     setLoading(true);
 
     try {
+      // Generate blockchain key first
+      const blockchainKeyResponse = await fetch("/api/blockchain/generate-key", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formData.email }),
+      });
+
+      if (!blockchainKeyResponse.ok) {
+        throw new Error("Failed to generate blockchain key");
+      }
+
+      const { blockchainKey } = await blockchainKeyResponse.json();
+
+      // Sign up user with blockchain key
       const { data, error: signUpError } = await authClient.signUp.email({
         email: formData.email,
         password: formData.password,
@@ -97,6 +111,7 @@ const SignupPage = () => {
         body: {
           firstName: formData.firstName,
           lastName: formData.lastName,
+          blockchainKey: blockchainKey,
         }
       });
 
@@ -104,7 +119,7 @@ const SignupPage = () => {
         throw new Error(signUpError.message || "Signup failed");
       }
 
-      console.log("Signup successful, moving to OTP verification");
+      console.log("Signup successful, blockchain key generated, moving to OTP verification");
       setStep("verify");
 
     } catch (err) {

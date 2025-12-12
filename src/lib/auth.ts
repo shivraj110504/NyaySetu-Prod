@@ -41,6 +41,7 @@ export const auth = betterAuth({
     additionalFields: {
       firstName: { type: "string", required: false, input: true },
       lastName: { type: "string", required: false, input: true },
+      blockchainKey: { type: "string", required: false, input: true },
     },
   },
 
@@ -54,15 +55,15 @@ export const auth = betterAuth({
           type === "email-verification"
             ? "Verify your email - Nyaysetu AI"
             : type === "sign-in"
-            ? "Sign in OTP - Nyaysetu AI"
-            : "Reset your password - Nyaysetu AI";
+              ? "Sign in OTP - Nyaysetu AI"
+              : "Reset your password - Nyaysetu AI";
 
         const message =
           type === "email-verification"
             ? "Please use this code to verify your email address."
             : type === "sign-in"
-            ? "Please use this code to sign in to your account."
-            : "Please use this code to reset your password.";
+              ? "Please use this code to sign in to your account."
+              : "Please use this code to reset your password.";
 
         try {
           await resend.emails.send({
