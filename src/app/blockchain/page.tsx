@@ -42,6 +42,7 @@ export default function BlockchainPage() {
     const [recipientKey, setRecipientKey] = useState("");
     const [sharingFileKey, setSharingFileKey] = useState("");
     const [viewingSharedFrom, setViewingSharedFrom] = useState(""); // Track whose files we're viewing
+    const [viewingFileKey, setViewingFileKey] = useState<string | null>(null);
 
     const RENDER_BACKEND_URL = process.env.NEXT_PUBLIC_RENDER_BACKEND_URL || "http://127.0.0.1:9000";
 
@@ -356,13 +357,22 @@ export default function BlockchainPage() {
                                                                 File Key: {file.fileKey}
                                                             </p>
                                                         </div>
-                                                        <Button
-                                                            onClick={() => handleDownload(file.fileKey)}
-                                                            size="sm"
-                                                            className="bg-yellow-600 hover:bg-yellow-700 text-white"
-                                                        >
-                                                            Download
-                                                        </Button>
+                                                        <div className="flex gap-2">
+                                                            <Button
+                                                                disabled={true}
+                                                                size="sm"
+                                                                className="bg-gray-400 cursor-not-allowed opacity-50 text-white"
+                                                            >
+                                                                Download
+                                                            </Button>
+                                                            <Button
+                                                                onClick={() => setViewingFileKey(file.fileKey)}
+                                                                size="sm"
+                                                                className="bg-yellow-600 hover:bg-yellow-700 text-white"
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             ))}
@@ -417,6 +427,40 @@ export default function BlockchainPage() {
                     </div>
                 </div>
             </div>
+
+            {/* File Viewer Modal */}
+            {viewingFileKey && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+                    <div className="bg-background border border-border rounded-lg w-full h-full max-w-5xl max-h-[85vh] flex flex-col relative shadow-2xl">
+                        <div className="flex justify-between items-center p-4 border-b border-border bg-card rounded-t-lg">
+                            <h3 className="text-lg font-semibold text-foreground">File Preview</h3>
+                            <div className="flex gap-2">
+                                <Button
+                                    onClick={() => window.open(`/api/blockchain/view?fileKey=${viewingFileKey}`, '_blank')}
+                                    variant="outline"
+                                    size="sm"
+                                >
+                                    Open in New Tab
+                                </Button>
+                                <Button
+                                    onClick={() => setViewingFileKey(null)}
+                                    variant="destructive"
+                                    size="sm"
+                                >
+                                    Close
+                                </Button>
+                            </div>
+                        </div>
+                        <div className="flex-1 bg-muted p-1 overflow-hidden">
+                            <iframe
+                                src={`/api/blockchain/view?fileKey=${viewingFileKey}`}
+                                className="w-full h-full rounded-b-lg border-none bg-white"
+                                title="File Preview"
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <FooterComponent />
         </>

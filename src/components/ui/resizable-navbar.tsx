@@ -300,11 +300,11 @@ export const NavbarLogo = ({ isScrolled }: NavbarLogoProps) => {
   return (
     <a
       href="#"
-      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal"
+      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-xl font-bold"
     >
       <img src={logoSrc} alt="logo" width={50} height={50} />
       <span className={cn(
-        "font-medium transition-colors",
+        "font-bold transition-colors",
         "text-foreground"
       )}>
         NyaySetu AI

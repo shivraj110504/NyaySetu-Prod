@@ -16,6 +16,7 @@ import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 
 export default function NavbarComponent() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState<number | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -33,8 +34,12 @@ export default function NavbarComponent() {
     {
       name: "More",
       submenu: [
+        { name: "Your Uploads", link: "/login" },
+        { name: "Predict IPC", link: "/ipcpredication" },
+        { name: "Generate Draft", link: "/generatedraft" },
+        { name: "Newsletter", link: "/newsletter" },
+        { name: "Platform Guide", link: "/platformguide" },
         { name: "About", link: "/about" },
-        { name: "Training", link: "/training" },
       ],
     },
   ];
@@ -90,15 +95,69 @@ export default function NavbarComponent() {
 
         <MobileNavMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)}>
           {navItems.map((item, index) => (
-            <a
-              key={index}
-              href={item.link}
-              className="text-lg font-medium text-foreground"
-              onClick={() => setMenuOpen(false)}
-            >
-              {item.name}
-            </a>
+            <div key={index} className="w-full">
+              {item.submenu ? (
+                <div>
+                  <button
+                    onClick={() =>
+                      setMobileSubmenuOpen(mobileSubmenuOpen === index ? null : index)
+                    }
+                    className="flex w-full items-center justify-between text-lg font-medium text-foreground py-2"
+                  >
+                    {item.name}
+                    <span className={`transform transition-transform ${mobileSubmenuOpen === index ? "rotate-180" : ""}`}>
+                      ▼
+                    </span>
+                  </button>
+                  {mobileSubmenuOpen === index && (
+                    <div className="ml-4 flex flex-col gap-2 border-l border-border pl-4">
+                      {item.submenu.map((subItem, subIndex) => (
+                        <a
+                          key={subIndex}
+                          href={subItem.link}
+                          className="text-base text-muted-foreground hover:text-foreground py-1"
+                          onClick={() => setMenuOpen(false)}
+                        >
+                          {subItem.name}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <a
+                  href={item.link}
+                  className="block text-lg font-medium text-foreground py-2"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item.name}
+                </a>
+              )}
+            </div>
           ))}
+
+          {/* Login/Signup Buttons for Mobile */}
+          <div className="mt-4 flex w-full flex-col gap-4 border-t border-border pt-4">
+            <Link href="/login" className="w-full" onClick={() => setMenuOpen(false)}>
+              <ShimmerButton
+                background="var(--primary)"
+                shimmerColor="var(--primary-foreground)"
+                className="w-full justify-center text-primary-foreground dark:[--bg:var(--accent)] dark:[--shimmer-color:var(--accent-foreground)] dark:text-accent-foreground"
+              >
+                Log In
+              </ShimmerButton>
+            </Link>
+
+            <Link href="/signup" className="w-full" onClick={() => setMenuOpen(false)}>
+              <ShimmerButton
+                background="var(--primary)"
+                shimmerColor="var(--primary-foreground)"
+                className="w-full justify-center text-primary-foreground dark:[--bg:var(--accent)] dark:[--shimmer-color:var(--accent-foreground)] dark:text-accent-foreground"
+              >
+                Sign Up
+              </ShimmerButton>
+            </Link>
+          </div>
         </MobileNavMenu>
       </MobileNav>
     </Navbar>

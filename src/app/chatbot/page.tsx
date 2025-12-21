@@ -283,9 +283,12 @@ const ChatbotPage = () => {
                   disabled={loading}
                   rows={1}
                   className="flex-1 bg-muted dark:bg-gray-800 text-foreground dark:text-white rounded-xl px-4 py-3 
-                         focus:outline-none focus:ring-2 focus:ring-cyan-500 
+                         border-2 border-yellow-400/40 dark:border-gray-700
+                         focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500
+                         hover:border-yellow-500/60 dark:hover:border-gray-600
                          resize-none disabled:opacity-50 disabled:cursor-not-allowed
-                         placeholder-muted-foreground dark:placeholder-gray-500 text-sm md:text-base"
+                         placeholder-muted-foreground dark:placeholder-gray-500 text-sm md:text-base
+                         transition-all duration-200"
                   style={{ minHeight: "48px", maxHeight: "120px" }}
                 />
                 <button

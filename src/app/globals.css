@@ -167,6 +167,17 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  :host {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Support for backdrop-filter */
+  .backdrop-blur-sm {
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
 }
 
 ::view-transition-old(root),

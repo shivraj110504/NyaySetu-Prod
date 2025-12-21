@@ -21,6 +21,7 @@ import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 export default function DashNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState<number | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -32,9 +33,11 @@ export default function DashNavbar() {
       name: "More",
       submenu: [
         { name: "Your Uploads", link: "/blockchain" },
+        { name: "Predict IPC", link: "/ipcpredication" },
+        { name: "Generate Draft", link: "/generatedraft" },
+        { name: "Newsletter", link: "/newsletter" },
+        { name: "Platform Guide", link: "/platformguide" },
         { name: "About", link: "/about" },
-        { name: "Training", link: "/training" },
-        { name: "Feature", link: "/features" },
       ],
     },
   ];
@@ -126,18 +129,49 @@ export default function DashNavbar() {
 
         <MobileNavMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)}>
           {navItems.map((item, index) => (
-            <a
-              key={index}
-              href={item.link}
-              className="text-lg font-medium text-gray-900 dark:text-neutral-200"
-              onClick={() => setMenuOpen(false)}
-            >
-              {item.name}
-            </a>
+            <div key={index} className="w-full">
+              {item.submenu ? (
+                <div>
+                  <button
+                    onClick={() =>
+                      setMobileSubmenuOpen(mobileSubmenuOpen === index ? null : index)
+                    }
+                    className="flex w-full items-center justify-between text-lg font-medium text-gray-900 dark:text-neutral-200 py-2"
+                  >
+                    {item.name}
+                    <span className={`transform transition-transform ${mobileSubmenuOpen === index ? "rotate-180" : ""}`}>
+                      ▼
+                    </span>
+                  </button>
+                  {mobileSubmenuOpen === index && (
+                    <div className="ml-4 flex flex-col gap-2 border-l border-gray-300 dark:border-gray-700 pl-4">
+                      {item.submenu.map((subItem, subIndex) => (
+                        <a
+                          key={subIndex}
+                          href={subItem.link}
+                          className="text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white py-1"
+                          onClick={() => setMenuOpen(false)}
+                        >
+                          {subItem.name}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <a
+                  href={item.link}
+                  className="block text-lg font-medium text-gray-900 dark:text-neutral-200 py-2"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item.name}
+                </a>
+              )}
+            </div>
           ))}
 
           {/* Mobile Profile Links */}
-          <div className="mt-4 border-t border-gray-300 dark:border-gray-700 pt-2">
+          <div className="mt-4 border-t border-gray-300 dark:border-gray-700 pt-2 w-full">
             <Link
               href="/profile"
               className="block px-4 py-2 text-gray-900 dark:text-neutral-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"

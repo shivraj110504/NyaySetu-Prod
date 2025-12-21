@@ -54,14 +54,14 @@ export const MacbookScroll = ({
   const [isMobile, setIsMobile] = useState(false); // safe default
 
   useEffect(() => {
-  // check window only on client
-  const handleResize = () => setIsMobile(window.innerWidth < 768);
-  
-  handleResize(); // initial check
-  window.addEventListener("resize", handleResize);
-  
-  return () => window.removeEventListener("resize", handleResize);
-}, []);
+    // check window only on client
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+
+    handleResize(); // initial check
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
 
 
@@ -83,7 +83,7 @@ export const MacbookScroll = ({
   return (
     <div
       ref={ref}
-      className="flex min-h-[270vh] shrink-0 scale-[0.35] transform flex-col items-center justify-start py-0 [perspective:800px] sm:scale-50 md:scale-100 md:py-80"
+      className="flex min-h-[150vh] shrink-0 scale-[0.6] transform flex-col items-center justify-start py-0 [perspective:800px] sm:scale-50 md:min-h-[270vh] md:scale-100 md:py-80"
     >
       <motion.h2
         style={{
