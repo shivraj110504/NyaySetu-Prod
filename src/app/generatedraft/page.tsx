@@ -115,6 +115,41 @@ export default function DraftGenerationPage() {
         }
     };
 
+    const uploadToBlockchain = async (blob: Blob, fileName: string) => {
+        try {
+            if (!session?.user) return;
+
+            const userKey = (session.user as any).blockchainKey;
+            if (!userKey) {
+                console.warn("Blockchain key not found in session. Skipping blockchain upload.");
+                return;
+            }
+
+            const username = session.user.email?.split("@")[0] || "user";
+            const file = new File([blob], fileName, { type: "application/pdf" });
+
+            const formData = new FormData();
+            formData.append("v_file", file);
+            formData.append("username", username);
+            formData.append("userKey", userKey);
+
+            console.log("Uploading draft to blockchain:", fileName);
+            const response = await fetch("/api/blockchain/upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                console.log("Draft successfully stored on blockchain");
+            } else {
+                const errorData = await response.json().catch(() => ({}));
+                console.error("Failed to store draft on blockchain:", errorData.error || "Unknown error");
+            }
+        } catch (err) {
+            console.error("Error during blockchain upload:", err);
+        }
+    };
+
     const handleBackToSelection = () => {
         setSelectedDocument(null);
         setError(null);
@@ -197,6 +232,9 @@ export default function DraftGenerationPage() {
             // Show success message
             setSuccessMessage('🎉 Affidavit generated successfully! Check your downloads.');
 
+            // Automatically upload to blockchain
+            uploadToBlockchain(blob, `NyaySetu_Affidavit_${Date.now()}.pdf`);
+
             // Reset form after 3 seconds
             setTimeout(() => {
                 setSuccessMessage(null);
@@ -247,6 +285,9 @@ export default function DraftGenerationPage() {
 
             // Show success message
             setSuccessMessage('🎉 RTI Application generated successfully! Check your downloads.');
+
+            // Automatically upload to blockchain
+            uploadToBlockchain(blob, `NyaySetu_RTI_Application_${Date.now()}.pdf`);
 
             // Reset form after 5 seconds
             setTimeout(() => {

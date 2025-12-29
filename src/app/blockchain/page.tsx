@@ -392,10 +392,31 @@ export default function BlockchainPage() {
                                         ) : myFiles.length > 0 ? (
                                             myFiles.map((file) => (
                                                 <div key={file.fileKey} className="border border-border rounded-lg p-4 bg-muted/30">
-                                                    <h5 className="font-semibold text-foreground mb-1">{file.filename}</h5>
-                                                    <p className="text-xs text-muted-foreground mb-3">
-                                                        File Key: {file.fileKey}
-                                                    </p>
+                                                    <div className="flex justify-between items-start mb-3">
+                                                        <div>
+                                                            <h5 className="font-semibold text-foreground mb-1">{file.filename}</h5>
+                                                            <p className="text-xs text-muted-foreground">
+                                                                File Key: {file.fileKey}
+                                                            </p>
+                                                        </div>
+                                                        <div className="flex gap-2">
+                                                            <Button
+                                                                onClick={() => handleDownload(file.fileKey)}
+                                                                size="sm"
+                                                                variant="outline"
+                                                                className="h-8"
+                                                            >
+                                                                Download
+                                                            </Button>
+                                                            <Button
+                                                                onClick={() => setViewingFileKey(file.fileKey)}
+                                                                size="sm"
+                                                                className="bg-yellow-600 hover:bg-yellow-700 text-white h-8"
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
+                                                    </div>
                                                     <div className="flex gap-2">
                                                         <Input
                                                             type="text"
