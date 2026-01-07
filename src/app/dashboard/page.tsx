@@ -11,6 +11,7 @@ import { MacbookScroll } from "@/components/ui/macbook-scroll";
 import { MagicCard } from "@/components/ui/magic-card";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import FooterComponent from "@/components/footer/FooterComponent";
+import Link from "next/link";
 
 // Auth
 import { authClient } from "@/lib/auth-client";
@@ -111,9 +112,11 @@ export default function DashboardPage() {
                 <p className="text-sm text-muted-foreground flex-grow">
                   Get instant legal guidance for IPC sections.
                 </p>
-                <ShinyButton className="mt-4 bg-primary text-primary-foreground dark:bg-accent dark:text-accent-foreground">
-                  Launch Chatbot
-                </ShinyButton>
+                <Link href="/chatbot" className="w-full">
+                  <ShinyButton className="mt-4 bg-primary text-primary-foreground dark:bg-accent dark:text-accent-foreground">
+                    Launch Chatbot
+                  </ShinyButton>
+                </Link>
               </div>
             </MagicCard>
 
@@ -130,9 +133,11 @@ export default function DashboardPage() {
                 <p className="text-sm text-muted-foreground flex-grow">
                   Predict relevant IPC sections from incident details.
                 </p>
-                <ShinyButton className="mt-4 bg-primary text-primary-foreground dark:bg-accent dark:text-accent-foreground">
-                  Start Prediction
-                </ShinyButton>
+                <Link href="/ipcpredication" className="w-full">
+                  <ShinyButton className="mt-4 bg-primary text-primary-foreground dark:bg-accent dark:text-accent-foreground">
+                    Start Prediction
+                  </ShinyButton>
+                </Link>
               </div>
             </MagicCard>
 
@@ -150,9 +155,11 @@ export default function DashboardPage() {
                 <p className="text-sm text-muted-foreground flex-grow">
                   Generate court-ready legal drafts instantly.
                 </p>
-                <ShinyButton className="mt-4 bg-primary text-primary-foreground dark:bg-accent dark:text-accent-foreground">
-                  Generate Draft
-                </ShinyButton>
+                <Link href="/generatedraft" className="w-full">
+                  <ShinyButton className="mt-4 bg-primary text-primary-foreground dark:bg-accent dark:text-accent-foreground">
+                    Generate Draft
+                  </ShinyButton>
+                </Link>
               </div>
             </MagicCard>
 
@@ -169,9 +176,11 @@ export default function DashboardPage() {
                 <p className="text-sm text-muted-foreground flex-grow">
                   Latest judgements, legal updates, amendments.
                 </p>
-                <ShinyButton className="mt-4 bg-primary text-primary-foreground dark:bg-accent dark:text-accent-foreground">
-                  View Updates
-                </ShinyButton>
+                <Link href="/newsletter" className="w-full">
+                  <ShinyButton className="mt-4 bg-primary text-primary-foreground dark:bg-accent dark:text-accent-foreground">
+                    View Updates
+                  </ShinyButton>
+                </Link>
               </div>
             </MagicCard>
 
