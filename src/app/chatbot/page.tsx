@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import DashNavbar from "@/components/navbar/DashNavbar";
 import { IconSend, IconUser, IconRobot, IconPaperclip, IconMicrophone, IconX, IconFileText, IconPhoto } from "@tabler/icons-react";
 import { MagicCard } from "@/components/ui/magic-card";
@@ -30,15 +30,6 @@ const ChatbotPage = () => {
   const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -76,29 +67,40 @@ const ChatbotPage = () => {
     setLoading(true);
 
     try {
-      // Call your Python API endpoint
-      // Note: You'll need to update your API to handle file uploads if you want to actually process the file
-      const response = await fetch("/api/chat", {
+      // Directly call the Render server API endpoint
+      const renderApiUrl = "https://vois-nyaysetu-chatbot.onrender.com/chat";
+
+      // Sanitize history to send only necessary fields
+      const sanitizedHistory = messages.slice(-5).map(msg => ({
+        text: msg.text,
+        sender: msg.sender
+      }));
+
+      const response = await fetch(renderApiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           message: userMessage.text,
-          history: messages.slice(-5), // Send last 5 messages for context
-          // file: ... // Handle file upload logic here (e.g., upload to storage first, then send URL)
+          history: sanitizedHistory,
         }),
+        signal: AbortSignal.timeout(60000), // 60 second timeout
       });
 
       const data = await response.json();
 
       if (!response.ok) {
+        // Handle Cold Start / Timeout (502 Bad Gateway / 504 Gateway Timeout)
+        if (response.status === 502 || response.status === 504) {
+          throw new Error("The AI system is warming up. This may take 2-3 minutes. Please try again shortly.");
+        }
         throw new Error(data.error || "Failed to get response");
       }
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: data.response,
+        text: data.reply || data.response || data.message || data.answer || "I'm not sure how to respond to that.",
         sender: "ai",
         timestamp: new Date(),
       };
@@ -174,7 +176,7 @@ const ChatbotPage = () => {
                     <p className="text-sm md:text-base whitespace-pre-wrap break-words">
                       {message.text}
                     </p>
-                    <span className="text-xs opacity-70 mt-1 block">
+                    <span suppressHydrationWarning className="text-xs opacity-70 mt-1 block">
                       {message.timestamp.toLocaleTimeString([], {
                         hour: "2-digit",
                         minute: "2-digit",
@@ -210,8 +212,6 @@ const ChatbotPage = () => {
                   </div>
                 </div>
               )}
-
-              <div ref={messagesEndRef} />
             </div>
 
             {/* Input Area */}
