@@ -115,7 +115,7 @@ export default function Home() {
         </div>
       </div>
 
-      <MacbookScroll src="/macbook-image.png" />
+      {/* <MacbookScroll src="/macbook-image.png" /> */}
 
       <div className="bg-background pt-24 px-4 pb-12 transition-colors duration-300">
         <div className="max-w-7xl mx-auto">

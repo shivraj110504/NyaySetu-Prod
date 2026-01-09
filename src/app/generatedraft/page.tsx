@@ -697,7 +697,7 @@ export default function DraftGenerationPage() {
                                         <button
                                             type="submit"
                                             disabled={isGenerating}
-                                            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-8 rounded-lg transition-all shadow-lg hover:shadow-xl active:scale-95 duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                                            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground dark:bg-accent dark:hover:bg-accent/90 dark:text-accent-foreground font-bold py-4 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                                         >
                                             {isGenerating ? (
                                                 <span className="flex items-center justify-center gap-3">
@@ -1075,7 +1075,7 @@ export default function DraftGenerationPage() {
                                         <button
                                             type="submit"
                                             disabled={isGenerating}
-                                            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-8 rounded-lg transition-all shadow-lg hover:shadow-xl active:scale-95 duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                                            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground dark:bg-accent dark:hover:bg-accent/90 dark:text-accent-foreground font-bold py-4 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                                         >
                                             {isGenerating ? (
                                                 <span className="flex items-center justify-center gap-3">

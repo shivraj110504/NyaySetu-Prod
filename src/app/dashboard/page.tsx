@@ -200,7 +200,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <MacbookScroll src="/macbook-image.png" />
+        {/* <MacbookScroll src="/macbook-image.png" /> */}
       </div>
       <FooterComponent />
     </>
