@@ -256,6 +256,8 @@ export default function DraftGenerationPage() {
                 court_name: formData.court_name,
                 case_number: formData.case_number,
                 place: formData.place,
+                userKey: (session?.user as any)?.blockchainKey,
+                username: session?.user?.email?.split("@")[0] || "user",
                 statements: [
                     `I, ${formData.name}, ${formData.gender === 'male' ? 'son' : 'daughter'} of ${formData.father_name}, solemnly affirm the following:`,
                     `I am aged about ${formData.age} years.`,
@@ -339,7 +341,9 @@ export default function DraftGenerationPage() {
                 bpl_card_no: rtiData.bpl_certificate,
                 payment_method: rtiData.payment_method,
                 fee_amount: rtiData.fee_amount || "10",
-                place: rtiData.place
+                place: rtiData.place,
+                userKey: (session?.user as any)?.blockchainKey,
+                username: session?.user?.email?.split("@")[0] || "user"
             };
 
             const response = await fetch(`${RENDER_API_URL}/api/generate/rti`, {
