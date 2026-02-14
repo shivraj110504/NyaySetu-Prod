@@ -5,10 +5,19 @@
 NyaySetuAI is a state-of-the-art legal assistance platform designed to bridge the gap between complex legal systems and the common citizen. By leveraging Generative AI for document drafting and Blockchain for evidence preservation, we make justice accessible, transparent, and efficient for everyone, anywhere in India.
 
 ---
+## 🔗 Key Links & Resources
+
+
+- 🎥 **Video Demo**: [Watch on Google Drive](https://drive.google.com/file/d/1rJPredawqqiG2unOv_pls5I4ljXwAKEk/view?usp=sharing)
+- 📊 **Presentation (PPT)**: [View on Google Slides](https://docs.google.com/presentation/d/12Ppq9JM9PsFdkoK8sKv1zrDM-P61rg-d/edit?usp=sharing&ouid=115360243046509219220&rtpof=true&sd=true)
+- 🌐 **Live URL**: [NyaySetuAI](https://nyay-setu-prod.vercel.app/)
+
+---
 
 ## 🚀 Vision & Mission
 
 **Vision**: To make legal knowledge a fundamental right, not a luxury.
+
 **Mission**: To simplify legal jargon, automate bureaucratic hurdles, and provide a secure bridge (Setu) between citizens and their legal rights.
 
 ---
